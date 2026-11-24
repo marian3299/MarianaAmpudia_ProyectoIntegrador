@@ -1,0 +1,43 @@
+export const URLS = {
+  //Destionos
+  GET_DESTINATIONS: "/destino",
+  GET_RANDOM_DESTINATIONS: "/destino/recommendations",
+  GET_DESTINATION_BY_ID: (id) => `/destino/${id}`,
+  CREATE_DESTINATION: "/destino",
+  UPDATE_DESTINATION: (id) => `/destino/${id}`,
+  DELETE_DESTINATION: (id) => `/destino/${id}`,
+
+  //Traits
+  GET_TRAITS: "/traits",
+  GET_TRAIT_BY_ID: (id) => `/traits/${id}`,
+  CREATE_TRAIT: "/traits",
+  UPDATE_TRAIT: (id) => `/traits/${id}`,
+  DELETE_TRAIT: (id) => `/traits/${id}`,
+
+  //Categories
+  GET_CATEGORIES: "/categories",
+  GET_CATEGORY_BY_ID: (id) => `/categories/${id}`,
+  CREATE_CATEGORY: "/categories",
+  UPDATE_CATEGORY: (id) => `/categories/${id}`,
+  DELETE_CATEGORY: (id) => `/categories/${id}`,
+
+  //Bookings
+  CREATE_BOOKING: "/bookings",
+  BOOKING_AVAILABILITY: "/bookings/availability",
+  MY_BOOKINGS: "/bookings/me",
+
+  //Settings
+  GET_WHATSAPP_SETTINGS: "/settings/whatsapp",
+  GET_ADMIN_SETTINGS: "/admin/settings",
+  UPDATE_WHATSAPP_SETTINGS: "/admin/settings/whatsapp",
+  UPDATE_EMAIL_SETTINGS: "/admin/settings/email",
+
+  //Favorites
+  GET_FAVORITES: "/favorites",
+  GET_FAVORITE_DESTINATIONS: "/favorites/destinos",
+  TOGGLE_FAVORITE: (destinoId) => `/favorites/${destinoId}/toggle`,
+
+  //Reviews
+  GET_REVIEWS_BY_DESTINO: (destinoId) => `/reviews/destino/${destinoId}`,
+  CREATE_REVIEW: "/reviews",
+};

@@ -1,0 +1,173 @@
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Home from "./routes/Home";
+import TourDetail from "./routes/TourDetail";
+import Footer from "./components/Footer";
+import Category from "./routes/Category";
+import FormTour from "./routes/FormTour";
+import Login from "./routes/Login";
+import Register from "./routes/Register";
+import Profile from "./routes/Profile";
+import { AuthProvider } from "./context/AuthContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
+import Admin from "./routes/Admin";
+import Users from "./routes/Users";
+import Traits from "./routes/Traits";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { PERMISSIONS } from "./constants/permissions";
+import Characteristics from "./routes/Categories";
+import Favorites from "./routes/Favorites";
+import BookingHistory from "./routes/BookingHistory";
+import BookingReview from "./routes/BookingReview";
+import BookingConfirmation from "./routes/BookingConfirmation";
+import WhatsAppFloatButton from "./components/WhatsAppFloatButton";
+import AdminSettings from "./routes/AdminSettings";
+
+function App() {
+  return (
+    <div className="App">
+      <AuthProvider>
+        <FavoritesProvider>
+          <Navbar />
+          <div className="content">
+            <Routes>
+            {/* Rutas públicas - no requieren autenticación */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Rutas públicas - se pueden navegar sin login, igual que en Booking */}
+            <Route path="/" element={<Home />} />
+            <Route path="/tour/:id" element={<TourDetail />} />
+            <Route path="/category/:id" element={<Category />} />
+
+            {/* Reserva - requiere login, se accede desde el detalle del producto */}
+            <Route
+              path="/tour/:id/reservar"
+              element={
+                <ProtectedRoute>
+                  <BookingReview />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tour/:id/reserva-confirmada"
+              element={
+                <ProtectedRoute>
+                  <BookingConfirmation />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Rutas protegidas - requieren autenticación */}
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <ProtectedRoute>
+                  <Favorites />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-bookings"
+              element={
+                <ProtectedRoute>
+                  <BookingHistory />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Rutas con permisos específicos */}
+            <Route
+              path="/new-tour"
+              element={
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.DESTINOS.CREATE}
+                  blockOnMobile
+                >
+                  <FormTour />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-tour/:id"
+              element={
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.DESTINOS.EDIT}
+                  blockOnMobile
+                >
+                  <FormTour />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.DESTINOS.VIEW}
+                  blockOnMobile
+                >
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.USERS.VIEW}
+                  blockOnMobile
+                >
+                  <Users />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/traits"
+              element={
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.TRAITS.VIEW}
+                  blockOnMobile
+                >
+                  <Traits />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <ProtectedRoute
+                  requiredPermission={PERMISSIONS.CHARACTERISTICS.VIEW}
+                  blockOnMobile
+                >
+                  <Characteristics />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/settings"
+              element={
+                <ProtectedRoute adminOnly blockOnMobile>
+                  <AdminSettings />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </div>
+        <WhatsAppFloatButton />
+        <Footer />
+        </FavoritesProvider>
+      </AuthProvider>
+    </div>
+  );
+}
+
+export default App;
