@@ -1,0 +1,6 @@
+* text=auto
+
+# Scripts del Maven Wrapper: cada uno con el fin de línea de su plataforma,
+# para que Git no los marque como modificados por normalización de CRLF/LF.
+/routopia_back/mvnw text eol=lf
+/routopia_back/mvnw.cmd text eol=crlf
