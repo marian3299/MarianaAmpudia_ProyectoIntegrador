@@ -1,0 +1,16 @@
+# Credenciales - NUNCA subir
+*.pem
+*accessKeys*.csv
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.vscode/
+.claude/
+
+# Node
+node_modules/
+
+# Stray root files sin uso real en el proyecto
+package-lock.json
