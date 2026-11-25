@@ -14,6 +14,17 @@ El proyecto está dividido en dos aplicaciones independientes:
 - Credenciales de **AWS S3** (`Access Key ID`, `Secret Access Key`, región y nombre del bucket) para que el backend pueda subir imágenes de destinos, categorías y características.
 - Opcional para probar el envío de emails de confirmación: una **cuenta de Gmail** con verificación en dos pasos activada (ver más abajo).
 
+## Atajo: levantar backend y frontend juntos
+
+Una vez configurado `application.properties` (ver el paso siguiente) y corrido `npm install` en `tour_booking/`, desde la raíz del repo podés levantar ambos con un solo comando:
+
+```bash
+npm install   # solo la primera vez, instala concurrently
+npm run dev
+```
+
+Esto corre `./mvnw spring-boot:run` y `npm run dev` en paralelo, mostrando la salida de cada uno con su propio color/etiqueta (`BACKEND` / `FRONTEND`). Si preferís verlos en terminales separadas (por ejemplo para reiniciar uno sin tocar el otro), seguí las instrucciones de las dos secciones siguientes.
+
 ## Cómo levantar el backend
 
 ```bash
