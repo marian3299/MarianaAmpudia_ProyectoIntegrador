@@ -14,18 +14,9 @@ El proyecto está dividido en dos aplicaciones independientes:
 - Credenciales de **AWS S3** (`Access Key ID`, `Secret Access Key`, región y nombre del bucket) para que el backend pueda subir imágenes de destinos, categorías y características.
 - Opcional para probar el envío de emails de confirmación: una **cuenta de Gmail** con verificación en dos pasos activada (ver más abajo).
 
-## Atajo: levantar backend y frontend juntos
+## Instalación y arranque
 
-Una vez configurado `application.properties` (ver el paso siguiente) y corrido `npm install` en `tour_booking/`, desde la raíz del repo podés levantar ambos con un solo comando:
-
-```bash
-npm install   # solo la primera vez, instala concurrently
-npm run dev
-```
-
-Esto corre `./mvnw spring-boot:run` y `npm run dev` en paralelo, mostrando la salida de cada uno con su propio color/etiqueta (`BACKEND` / `FRONTEND`). Si preferís verlos en terminales separadas (por ejemplo para reiniciar uno sin tocar el otro), seguí las instrucciones de las dos secciones siguientes.
-
-## Cómo levantar el backend
+### 1. Configurar `application.properties` (backend)
 
 ```bash
 cd routopia_back
@@ -37,18 +28,26 @@ Editá `application.properties` y completá:
 - `aws.accessKey`, `aws.secretKey`, `aws.region`, `aws.s3.bucketName` — tus credenciales de AWS S3.
 - `jwt.secret` — cualquier cadena larga y aleatoria (se usa para firmar los tokens de sesión).
 
-Luego:
+### 2. Instalar dependencias del frontend
 
 ```bash
-./mvnw spring-boot:run
+cd tour_booking
+npm install
 ```
 
-El backend queda escuchando en `http://localhost:8080`.
+### 3. Levantar el proyecto
 
-- Swagger (documentación de la API): `http://localhost:8080/swagger-ui/index.html`
-- Consola H2 (base de datos local, se guarda en `routopia_back/data/routopia`): `http://localhost:8080/h2-console`
-  - JDBC URL: `jdbc:h2:file:./data/routopia`
-  - Usuario: `sa` — Contraseña: `sa`
+Desde la **raíz del repo**:
+
+```bash
+npm install   # solo la primera vez, instala concurrently
+npm run dev
+```
+
+Esto levanta **backend y frontend al mismo tiempo**, en paralelo, mostrando la salida de cada uno con su propio color/etiqueta (`BACKEND` / `FRONTEND`):
+
+- Backend en `http://localhost:8080`
+- Frontend en `http://localhost:5173`
 
 Al arrancar por primera vez, el backend siembra automáticamente:
 
@@ -56,15 +55,30 @@ Al arrancar por primera vez, el backend siembra automáticamente:
 - Un usuario de prueba: `user@routopia.com` / `user123`
 - 10 destinos de ejemplo con sus categorías, características y políticas.
 
-## Cómo levantar el frontend
+Otros endpoints útiles del backend:
+
+- Swagger (documentación de la API): `http://localhost:8080/swagger-ui/index.html`
+- Consola H2 (base de datos local, se guarda en `routopia_back/data/routopia`): `http://localhost:8080/h2-console`
+  - JDBC URL: `jdbc:h2:file:./data/routopia`
+  - Usuario: `sa` — Contraseña: `sa`
+
+### Alternativa: levantarlos por separado
+
+Si preferís tener cada uno en su propia terminal (por ejemplo, para reiniciar uno sin tocar el otro):
+
+**Backend:**
+
+```bash
+cd routopia_back
+./mvnw spring-boot:run
+```
+
+**Frontend** (el `vite.config` ya tiene un proxy de `/api/*` hacia `http://localhost:8080`, así que **el backend tiene que estar corriendo** para que el frontend funcione):
 
 ```bash
 cd tour_booking
-npm install
 npm run dev
 ```
-
-La app queda disponible en `http://localhost:5173`. El `vite.config` ya tiene configurado un proxy de `/api/*` hacia `http://localhost:8080`, así que **el backend tiene que estar corriendo** para que el frontend funcione.
 
 ## Configurar el envío de emails (panel de administrador)
 
