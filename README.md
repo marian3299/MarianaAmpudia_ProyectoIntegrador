@@ -11,17 +11,8 @@ El proyecto está dividido en dos aplicaciones independientes:
 
 - **Java 17** y Maven (el proyecto incluye el wrapper `./mvnw`, no hace falta instalar Maven aparte).
 - **Node.js** (v18 o superior) y npm.
-- Un **bucket de AWS S3 propio, ya creado** (ver instrucciones abajo) — **es obligatorio, no opcional**: sin esto, cualquier flujo que suba una imagen (crear/editar un destino, una categoría o una característica desde el panel de admin) va a fallar.
+- Credenciales de **AWS S3** (`Access Key ID`, `Secret Access Key`, región y nombre del bucket) para que el backend pueda subir imágenes de destinos, categorías y características.
 - Opcional para probar el envío de emails de confirmación: una **cuenta de Gmail** con verificación en dos pasos activada (ver más abajo).
-
-## ⚠️ Antes de levantar el backend: crear el bucket de S3
-
-El backend sube ahí todas las imágenes (destinos, categorías, características) y guarda la URL resultante en la base de datos. **Si no configurás esto antes de arrancar, el panel de administración no va a poder crear ni editar nada que lleve una imagen.**
-
-1. Entrá a la consola de AWS → **S3** → **Create bucket**.
-2. Elegí un nombre único (por ejemplo `routopia-imagenes-tuapellido`) y una región (por ejemplo `us-east-1`).
-3. El bucket necesita servir las imágenes públicamente por URL directa, así que **desmarcá "Block all public access"** y agregale una **Bucket Policy** que permita lectura pública (`s3:GetObject`) a cualquiera sobre ese bucket. AWS te da el ejemplo de policy en la propia consola al crear el bucket.
-4. Creá un usuario IAM (o un rol/credencial) con permisos de `s3:PutObject` y `s3:DeleteObject` sobre ese bucket, y generá su **Access Key ID** y **Secret Access Key**.
 
 ## Cómo levantar el backend
 
@@ -32,7 +23,7 @@ cp src/main/resources/application.properties.example src/main/resources/applicat
 
 Editá `application.properties` y completá:
 
-- `aws.accessKey`, `aws.secretKey`, `aws.region`, `aws.s3.bucketName` — las credenciales y el bucket que acabás de crear en el paso anterior.
+- `aws.accessKey`, `aws.secretKey`, `aws.region`, `aws.s3.bucketName` — tus credenciales de AWS S3.
 - `jwt.secret` — cualquier cadena larga y aleatoria (se usa para firmar los tokens de sesión).
 
 Luego:
