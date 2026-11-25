@@ -5,6 +5,7 @@ import com.back.routopia.repositroy.AppSettingsRepository;
 import com.back.routopia.repositroy.BookingRepository;
 import com.back.routopia.repositroy.CategoryRepository;
 import com.back.routopia.repositroy.DestinoRespository;
+import com.back.routopia.repositroy.TraitRepository;
 import com.back.routopia.repositroy.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -35,6 +36,9 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private AppSettingsRepository appSettingsRepository;
+
+    @Autowired
+    private TraitRepository traitRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -67,6 +71,9 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("Email: user@routopia.com");
             System.out.println("Password: user123");
         }
+
+        // Crear características (traits) de ejemplo si no existen
+        createSampleTraits();
 
         // Crear destinos de ejemplo si no existen
         createSampleDestinos();
@@ -411,6 +418,38 @@ public class DataInitializer implements CommandLineRunner {
             policy.setDestino(destino);
             destino.getPolicies().add(policy);
         }
+    }
+
+    private void createSampleTraits() {
+        String[][] traitsData = {
+                {"Playa", "https://img.icons8.com/ios-filled/100/000000/beach.png"},
+                {"Montaña", "https://img.icons8.com/ios-filled/100/000000/mountain.png"},
+                {"Senderismo", "https://img.icons8.com/ios-filled/100/000000/trekking.png"},
+                {"Gastronomía", "https://img.icons8.com/ios-filled/100/000000/food.png"},
+                {"Museos", "https://img.icons8.com/ios-filled/100/000000/museum.png"},
+                {"Vida familiar", "https://img.icons8.com/ios-filled/100/000000/family.png"},
+                {"Buceo", "https://img.icons8.com/ios-filled/100/000000/scuba-diving.png"},
+                {"Spa y relax", "https://img.icons8.com/ios-filled/100/000000/spa.png"},
+                {"Patrimonio histórico", "https://img.icons8.com/ios-filled/100/000000/historical.png"},
+                {"Aventura", "https://img.icons8.com/ios-filled/100/000000/adventure.png"},
+        };
+
+        for (String[] traitData : traitsData) {
+            getOrCreateTrait(traitData[0], traitData[1]);
+        }
+    }
+
+    private Trait getOrCreateTrait(String name, String imageUrl) {
+        return traitRepository.findAll().stream()
+                .filter(t -> t.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .map(existing -> {
+                    if (existing.getImageUrl() == null && imageUrl != null) {
+                        existing.setImageUrl(imageUrl);
+                    }
+                    return traitRepository.save(existing);
+                })
+                .orElseGet(() -> traitRepository.save(new Trait(name, imageUrl)));
     }
 
     private Category getOrCreateCategory(String name, String description, String imageUrl) {
