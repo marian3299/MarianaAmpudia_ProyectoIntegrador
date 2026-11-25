@@ -4,8 +4,8 @@ Routopia es una plataforma de reserva de tours y destinos turísticos: los usuar
 
 El proyecto está dividido en dos aplicaciones independientes:
 
-- **`routopia_back/`** — API REST en Spring Boot (Java 17).
-- **`tour_booking/`** — SPA en React 19 + Vite que consume esa API.
+- `routopia_back/` — API REST en Spring Boot (Java 17).
+- `tour_booking/` — SPA en React 19 + Vite que consume esa API.
 
 ## Requisitos previos
 
@@ -79,7 +79,7 @@ cd routopia_back
 ./mvnw spring-boot:run
 ```
 
-**Frontend** (el `vite.config` ya tiene un proxy de `/api/*` hacia `http://localhost:8080`, así que **el backend tiene que estar corriendo** para que el frontend funcione):
+**Frontend** (el `vite.config` ya tiene un proxy de `/api/`\* hacia `http://localhost:8080`, así que **el backend tiene que estar corriendo** para que el frontend funcione):
 
 ```bash
 cd tour_booking
