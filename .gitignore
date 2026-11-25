@@ -11,7 +11,3 @@
 
 # Node
 node_modules/
-
-# Stray root files sin uso real en el proyecto
-package-lock.json
-package.json

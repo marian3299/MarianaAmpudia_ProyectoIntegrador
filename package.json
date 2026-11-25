@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "dev": "concurrently -n BACKEND,FRONTEND -c blue,green \"cd routopia_back && ./mvnw spring-boot:run\" \"cd tour_booking && npm run dev\""
+  },
+  "dependencies": {
+    "react-datepicker": "^9.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.5"
+  }
+}
