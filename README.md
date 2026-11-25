@@ -26,7 +26,13 @@ cp src/main/resources/application.properties.example src/main/resources/applicat
 Editá `application.properties` y completá:
 
 - `aws.accessKey`, `aws.secretKey`, `aws.region`, `aws.s3.bucketName` — tus credenciales de AWS S3.
-- `jwt.secret` — cualquier cadena larga y aleatoria (se usa para firmar los tokens de sesión).
+- `jwt.secret` — cualquier cadena larga y aleatoria (se usa para firmar los tokens de sesión). Generá una con:
+
+  ```bash
+  openssl rand -base64 64 | tr -d '\n'
+  ```
+
+  (si no tenés `openssl`, también sirve `node -e "console.log(require('crypto').randomBytes(64).toString('base64'))"`). Pegá el resultado como valor de `jwt.secret`, en una sola línea.
 
 ### 2. Instalar dependencias del frontend
 
